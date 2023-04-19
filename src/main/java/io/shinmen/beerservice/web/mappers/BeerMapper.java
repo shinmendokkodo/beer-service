@@ -5,7 +5,6 @@ import io.shinmen.beerservice.web.model.BeerDto;
 import org.mapstruct.Mapper;
 
 @Mapper(uses = {DateMapper.class})
-
 public interface BeerMapper {
 
     Beer toBeer(BeerDto dto);
