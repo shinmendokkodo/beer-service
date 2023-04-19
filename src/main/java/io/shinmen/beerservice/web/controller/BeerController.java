@@ -1,17 +1,22 @@
 package io.shinmen.beerservice.web.controller;
 
-import io.shinmen.beerservice.repositories.BeerRepository;
-import io.shinmen.beerservice.services.BeerService;
-import io.shinmen.beerservice.web.mappers.BeerMapper;
-import io.shinmen.beerservice.web.model.BeerDto;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import java.util.UUID;
 
 import javax.validation.Valid;
-import java.util.UUID;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import io.shinmen.beerservice.services.BeerService;
+import io.shinmen.beerservice.web.model.BeerDto;
+import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/api/v1/beer")
 @RestController
@@ -26,12 +31,12 @@ public class BeerController {
     }
 
     @PostMapping
-    public ResponseEntity saveNewBeer(@RequestBody @Valid BeerDto beerDto){
+    public ResponseEntity<BeerDto> saveNewBeer(@RequestBody @Valid BeerDto beerDto){
         return new ResponseEntity<>(beerService.saveNewBeer(beerDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{beerId}")
-    public ResponseEntity updateBeerById(@PathVariable("beerId") UUID beerId, @RequestBody @Valid BeerDto beerDto){
+    public ResponseEntity<BeerDto> updateBeerById(@PathVariable("beerId") UUID beerId, @RequestBody @Valid BeerDto beerDto){
         return new ResponseEntity<>(beerService.updateBeer(beerId, beerDto), HttpStatus.NO_CONTENT);
     }
 }
