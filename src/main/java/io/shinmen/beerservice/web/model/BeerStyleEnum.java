@@ -1,4 +1,5 @@
 package io.shinmen.beerservice.web.model;
 
-public class BeerStyleEnum {
+public enum BeerStyleEnum {
+    LAGER, PILSNER, STOUT, GOSE, PORTER, ALE, WHEAT, IPA, PALE_ALE, SAISON
 }

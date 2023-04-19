@@ -1,4 +1,4 @@
-package io.shinmen.beerservice.domain;
+package io.shinmen.beerservice.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
