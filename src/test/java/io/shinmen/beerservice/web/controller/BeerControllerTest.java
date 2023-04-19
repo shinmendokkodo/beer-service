@@ -3,6 +3,7 @@ package io.shinmen.beerservice.web.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.shinmen.beerservice.entities.Beer;
 import io.shinmen.beerservice.repositories.BeerRepository;
+import io.shinmen.beerservice.services.BeerService;
 import io.shinmen.beerservice.web.model.BeerDto;
 import io.shinmen.beerservice.web.model.BeerStyleEnum;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
+import io.shinmen.beerservice.bootstrap.DataLoader;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.constraints.ConstraintDescriptions;
 import org.springframework.restdocs.payload.FieldDescriptor;
@@ -40,7 +42,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureRestDocs(uriScheme = "https", uriHost = "dev.springframework.guru", uriPort = 80)
 @WebMvcTest(BeerController.class)
 @ExtendWith(RestDocumentationExtension.class)
-@ComponentScan(basePackages = "io.shinmen.beerservice.web.mappers")
 class BeerControllerTest {
 
     @Autowired
@@ -50,11 +51,11 @@ class BeerControllerTest {
     ObjectMapper objectMapper;
 
     @MockBean
-    BeerRepository beerRepository;
+    BeerService beerService;
 
     @Test
     void getBeerById() throws Exception {
-        given(beerRepository.findById(any())).willReturn(Optional.of(Beer.builder().build()));
+        given(beerService.getById(any())).willReturn(getValidBeerDto());
 
         mockMvc.perform(get("/api/v1/beer/{beerId}", UUID.randomUUID())
                 .param("iscold", "yes")
@@ -121,12 +122,12 @@ class BeerControllerTest {
                 .andExpect(status().isNoContent());
     }
 
-    BeerDto getValidBeerDto() {
+    BeerDto getValidBeerDto(){
         return BeerDto.builder()
                 .beerName("My Beer")
                 .beerStyle(BeerStyleEnum.ALE)
-                .price(new BigDecimal( "2.99"))
-                .upc(123123123123L)
+                .price(new BigDecimal("2.99"))
+                .upc(DataLoader.BEER_1_UPC)
                 .build();
     }
 

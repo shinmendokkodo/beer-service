@@ -1,5 +1,5 @@
-= SFG Brewery Order Service Docs
-John Thompson;
+= Beer Service Docs
+Shinmen Dokkodo;
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
